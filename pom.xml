@@ -7,29 +7,69 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
-    </parent>
+
+    <!--   spring-boot-starter-parent extends spring-boot-dependencies; Provides default Java version; plugin version handled automatically -->
+    <!--        <parent>-->
+    <!--            <groupId>org.springframework.boot</groupId>-->
+    <!--            <artifactId>spring-boot-starter-parent</artifactId>-->
+    <!--            <version>3.4.5</version>-->
+    <!--        </parent>-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.4.5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
+        <!-- No need to specify version here -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
+
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
+
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>3.4.5</version> <!--must specify plugin versions manually and Must explicitly set <java.version> if you use spring-boot-dependencies-->
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal> <!-- Required for fat jar -->
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+
+    <!--    With spring-boot-maven-plugin you can run app as  mvn cljava -jar target/core-sb-project-1.0.0.jar-->
+    <!--    mvn spring-boot:run is a Maven command that runs your Spring Boot application directly from the source code — without building a JAR first   -->
+    <!--    We can still compile and run a Spring Boot app without adding the spring-boot-maven-plugin in our pom.xml -->
+    <!--    The spring-boot-maven-plugin is responsible for creating an executable JAR when wecd  run-->
+
 </project>
